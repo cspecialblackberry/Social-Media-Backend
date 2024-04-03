@@ -14,14 +14,11 @@ const userSchema = new mongoose.Schema({
         }
     },
     friends: {type: Array},
-    thoughts: {type: Array},
-    virtuals: {
-        friendCount: {
-            get() {
-                return this.friends.length
-            }
-        }
-    }
+    thoughts: {type: Array}
+})
+
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length
 })
 
 const User = mongoose.model('User', userSchema)
