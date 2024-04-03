@@ -1,3 +1,5 @@
 const User = require('./userModel')
 
-module.exports = { User } 
+const Thought = require('./thoughtModel')
+
+module.exports = { User, Thought } 
