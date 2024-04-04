@@ -15,7 +15,8 @@ router.get('/', async (req, res) => {
 //get one user by id
 router.get('/:id', async (req, res) => {
     try{
-
+        const response = await User.findById(req.params.id).lean()
+        res.send(response)
     }catch(err){
         console.error(err)
         res.status(400).json(err)
