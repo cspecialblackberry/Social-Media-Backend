@@ -61,5 +61,18 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+//add users to another's friends list
+router.post('/:id/friends/:friendId', async (req, res) => {
+    try{
+        const response = await User.findById(req.params.id).lean()
+        response.friends.push(req.params.friendId)
+        res.send(response)
+    }catch(err){
+        console.error(err)
+        res.status(400).json(err)
+    }
+})
+
+
 
 module.exports = router
