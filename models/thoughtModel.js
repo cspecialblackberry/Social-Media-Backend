@@ -20,7 +20,13 @@ const thoughtSchema = new mongoose.Schema({
         min: [1, "Thought must contain at least 1 character."],
         max: [280, "Thought must be less than 280 characters."]
     },
-    createdAt: { type: Date, default: Date.now },
+    createdAt: { 
+        type: Date, 
+        default: Date.now,
+        get: function() {
+            return this.createdAt.toLocaleDateString() || ' '
+        }
+    },
     username: { type: String, required: true },
     reactions: [reactionSchema]
 })
