@@ -73,11 +73,11 @@ router.post('/:id/friends/:friendId', async (req, res) => {
                     _id: new ObjectId(req.params.id)
                 }, response)
                 res.send(update)
-            }else{
-            res.send('invalid friend id')
+            } else {
+                res.send('invalid friend id')
             }
-        }else{
-        res.send('invalid user id')
+        } else {
+            res.send('invalid user id')
         }
     } catch (err) {
         console.error(err)
@@ -88,8 +88,20 @@ router.post('/:id/friends/:friendId', async (req, res) => {
 router.delete('/:id/friends/:friendId', async (req, res) => {
     try {
         const response = await User.findById(req.params.id).lean()
-        response.friends.splice((response.friends.indexOf(req.params.friendId)), 1)
-        res.send(response)
+        if (response) {
+            if (response.friends.indexOf(req.params.friendId)) {
+                response.friends.splice((response.friends.indexOf(req.params.friendId)), 1)
+                const update = await User.updateOne({
+                    _id: new ObjectId(req.params.id)
+                }, response)
+                res.send(update)
+            } else {
+                res.send('This friend does not exist')
+            }
+        } else {
+            res.send('This user does not exist')
+        }
+
     } catch (err) {
         console.error(err)
         res.status(400).json(err)
