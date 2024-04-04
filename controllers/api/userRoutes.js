@@ -1,10 +1,11 @@
-const router = require('express').Router
+const router = require('express').Router()
 const { User } = require('../../models')
 
 //get all users
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try{
-
+        const response = await User.find({}).lean()
+        res.send(response)
     }catch(err){
         console.error(err)
         res.status(400).json(err)
@@ -12,7 +13,7 @@ router.get('/', (req, res) => {
 })
 
 //get one user by id
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     try{
 
     }catch(err){
@@ -22,7 +23,7 @@ router.get('/:id', (req, res) => {
 })
 
 //create a new user
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     try{
 
     }catch(err){
@@ -32,7 +33,7 @@ router.post('/', (req, res) => {
 })
 
 //edit a user by id
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
     try{
 
     }catch(err){
@@ -42,7 +43,7 @@ router.put('/:id', (req, res) => {
 })
 
 //delete a user by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', async (req, res) => {
     try{
 
     }catch(err){
