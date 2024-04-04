@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { User } = require('../../models')
+const {ObjectId} = require('mongodb')
 
 //get all users
 router.get('/', async (req, res) => {
@@ -37,7 +38,10 @@ router.post('/', async (req, res) => {
 //edit a user by id
 router.put('/:id', async (req, res) => {
     try{
-
+        const response = await User.updateOne({
+            _id: new ObjectId(req.params.id)
+        }, req.body)
+        res.send(response)
     }catch(err){
         console.error(err)
         res.status(400).json(err)
@@ -47,7 +51,10 @@ router.put('/:id', async (req, res) => {
 //delete a user by id
 router.delete('/:id', async (req, res) => {
     try{
-
+        const response = await User.deleteOne({
+            _id: new ObjectId(req.params.id)
+        })
+        res.send(response)
     }catch(err){
         console.error(err)
         res.status(400).json(err)
