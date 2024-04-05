@@ -24,7 +24,7 @@ const thoughtSchema = new mongoose.Schema({
         type: Date, 
         default: Date.now,
         get: function() {
-            return this.createdAt.toLocaleDateString() || ' '
+            return this.createdAt.toLocaleDateString() || ''
         }
     },
     username: { type: String, required: true },

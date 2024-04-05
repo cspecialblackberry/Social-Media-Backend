@@ -85,6 +85,7 @@ router.post('/:id/friends/:friendId', async (req, res) => {
     }
 })
 
+//delete a friend from a user's friends list
 router.delete('/:id/friends/:friendId', async (req, res) => {
     try {
         const response = await User.findById(req.params.id).lean()
