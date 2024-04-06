@@ -62,4 +62,25 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+//post a reaction to a specific thought
+router.post('/:id/reactions', async (req, res) => {
+    console.log(req.body)
+    try{
+        const response = await Thought.findById(req.params.id).lean()
+        if(response){
+            response.reactions.push(req.body)
+            console.log(response)
+            const update = await Thought.updateOne({
+                _id: new ObjectId(req.params.id)
+            }, response)
+            res.status(200).send(update)
+        }else{
+            res.send('invalid thought id')
+        }
+    }catch(err){
+        console.error(err)
+        res.status(400).json(err)
+    }
+})
+
 module.exports = router
