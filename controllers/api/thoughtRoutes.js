@@ -83,4 +83,21 @@ router.post('/:id/reactions', async (req, res) => {
     }
 })
 
+//delete a reaction
+router.delete('/:id/reactions/:reactionId', async (req, res) => {
+    try{
+        const response = await Thought.findById(req.params.id).lean()
+        const reactionIndex = response.reactions.indexOf(response.reactions.find((obj) => obj._id === req.params.reactionId))
+        response.reactions.splice(reactionIndex, 1)
+        const update = await Thought.updateOne({
+            _id: new ObjectId(req.params.id)
+        }, response)
+        res.send(update)
+    }catch(err){
+        console.error(err)
+        res.status(400).json(err)
+    }
+})
+
+
 module.exports = router
