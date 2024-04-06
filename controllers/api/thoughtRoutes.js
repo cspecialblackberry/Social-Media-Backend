@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Thought } = require('../../models')
+const { ObjectId } = require('mongodb')
 
 //get all thoughts
 router.get('/', async (req, res) => {
