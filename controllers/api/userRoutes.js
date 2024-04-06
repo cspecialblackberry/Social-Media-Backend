@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 //get all users
 router.get('/', async (req, res) => {
     try {
-        const response = await User.find({}).lean()
+        const response = await User.find({}).lean({virtuals: true})
         res.send(response)
     } catch (err) {
         console.error(err)
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 //get one user by id
 router.get('/:id', async (req, res) => {
     try {
-        const response = await User.findById(req.params.id).lean()
+        const response = await User.findById(req.params.id).lean({virtuals: true})
         res.send(response)
     } catch (err) {
         console.error(err)
@@ -68,7 +68,7 @@ router.post('/:id/friends/:friendId', async (req, res) => {
         if (response) {
             const friendResponse = await User.findById(req.params.friendId).lean()
             if (friendResponse) {
-                response.friends.push(friendResponse._id)
+                response.friends.push(friendResponse)
                 const update = await User.updateOne({
                     _id: new ObjectId(req.params.id)
                 }, response)

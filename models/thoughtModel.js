@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 const mongooseLeanVirtuals = require('mongoose-lean-virtuals')
 const { ObjectId } = require('mongoose')
 
+const formatDate = (date) => {
+    return date.toLocaleDateString() || ''
+}
 
 const reactionSchema = new mongoose.Schema({
     reactionId: { default: new ObjectId },
@@ -11,7 +14,7 @@ const reactionSchema = new mongoose.Schema({
         max: [280, "Reaction must be less than 280 characters."]
     },
     username: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now, get: formatDate }
 })
 
 const thoughtSchema = new mongoose.Schema({
@@ -24,17 +27,16 @@ const thoughtSchema = new mongoose.Schema({
     createdAt: { 
         type: Date, 
         default: Date.now,
-        get: function() {
-            return this.createdAt.toLocaleDateString() || ''
-        }
+        get: formatDate
     },
     username: { type: String, required: true },
     reactions: [reactionSchema]
-})
+}, { toJSON: { getters:true } })
 
 thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length
 })
+
 
 thoughtSchema.plugin(mongooseLeanVirtuals)
 

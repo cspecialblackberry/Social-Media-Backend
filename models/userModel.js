@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongooseLeanVirtuals = require('mongoose-lean-virtuals')
 
 const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true, trimmed: true},
@@ -20,6 +21,8 @@ const userSchema = new mongoose.Schema({
 userSchema.virtual('friendCount').get(function() {
     return this.friends.length
 })
+
+userSchema.plugin(mongooseLeanVirtuals)
 
 const User = mongoose.model('User', userSchema)
 
