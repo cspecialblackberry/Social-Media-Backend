@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 //get all thoughts
 router.get('/', async (req, res) => {
     try {
-        const response = await Thought.find({}).lean()
+        const response = await Thought.find({}).lean({virtuals: true})
         res.send(response)
     } catch (err) {
         console.error(err)
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 //get one thought by id
 router.get('/:id', async (req, res) => {
     try {
-        const response = await Thought.findById(req.params.id).lean()
+        const response = await Thought.findById(req.params.id).lean({virtuals: true})
         res.send(response)
     } catch (err) {
         console.error(err)

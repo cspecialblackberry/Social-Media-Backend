@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongooseLeanVirtuals = require('mongoose-lean-virtuals')
 const { ObjectId } = require('mongoose')
 
 
@@ -34,6 +35,8 @@ const thoughtSchema = new mongoose.Schema({
 thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length
 })
+
+thoughtSchema.plugin(mongooseLeanVirtuals)
 
 const Thought = mongoose.model('Thought', thoughtSchema)
 
