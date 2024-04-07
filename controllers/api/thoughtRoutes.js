@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Thought } = require('../../models')
+const { Thought, User } = require('../../models')
 const { ObjectId } = require('mongodb')
 
 //get all thoughts
@@ -28,6 +28,19 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         const response = await Thought.create(req.body)
+        // const user = await User.findOne({
+        //     username: req.body.username
+        // })
+        // user.thoughts.push(req.body)
+        // console.log(user)
+        // User.updateOne({
+        //     _id: user._id
+        // }, user)
+        User.findOneAndUpdate(
+            { _id: req.body.username },
+            { $push: { thoughts: req.body } },
+            { new: true }
+          )
         res.send(response)
     } catch (err) {
         console.error(err)
