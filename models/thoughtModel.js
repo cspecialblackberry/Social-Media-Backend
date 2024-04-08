@@ -27,11 +27,14 @@ const thoughtSchema = new mongoose.Schema({
     createdAt: { 
         type: Date, 
         default: Date.now,
-        get: formatDate
+        get: (createdAt) => createdAt.toLocaleDateString() || ''
     },
     username: { type: String, required: true },
     reactions: [reactionSchema]
-}, { toJSON: { getters:true } })
+}, {
+    toJSON: {getters: true},
+    toObject: {getters: true}
+})
 
 thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length
