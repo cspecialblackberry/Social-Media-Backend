@@ -5,7 +5,8 @@ const { ObjectId } = require('mongodb')
 //get all users
 router.get('/', async (req, res) => {
     try {
-        const response = await User.find({}).lean({virtuals: true})
+        // const response = await User.find({}).lean({virtuals: true, getters: true})
+        const response = await User.find({})
         res.send(response)
     } catch (err) {
         console.error(err)

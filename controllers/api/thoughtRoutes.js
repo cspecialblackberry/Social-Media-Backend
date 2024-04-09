@@ -5,7 +5,7 @@ const { ObjectId } = require('mongodb')
 //get all thoughts
 router.get('/', async (req, res) => {
     try {
-        const response = await Thought.find({}).lean({ virtuals: true })
+        const response = await Thought.find({})
         res.send(response)
     } catch (err) {
         console.error(err)
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
         res.status(400).json(err)
     }
 })
-//TODO PUSH THOUGHT TO ASSOCIATED USER
+
 
 //edit a thought by id
 router.put('/:id', async (req, res) => {
