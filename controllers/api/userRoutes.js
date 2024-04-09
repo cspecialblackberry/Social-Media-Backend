@@ -5,11 +5,9 @@ const { ObjectId } = require('mongodb')
 //get all users
 router.get('/', async (req, res) => {
     try {
-        // const response = await User.find({}).lean({virtuals: true, getters: true})
         const response = await User.find({})
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -17,10 +15,9 @@ router.get('/', async (req, res) => {
 //get one user by id
 router.get('/:id', async (req, res) => {
     try {
-        const response = await User.findById(req.params.id).lean({virtuals: true})
+        const response = await User.findById(req.params.id)
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -31,7 +28,6 @@ router.post('/', async (req, res) => {
         const newUser = await User.create(req.body)
         res.send(newUser)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -44,7 +40,6 @@ router.put('/:id', async (req, res) => {
         }, req.body)
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -57,7 +52,6 @@ router.delete('/:id', async (req, res) => {
         })
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -81,7 +75,6 @@ router.post('/:id/friends/:friendId', async (req, res) => {
             res.send('invalid user id')
         }
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -105,7 +98,6 @@ router.delete('/:id/friends/:friendId', async (req, res) => {
         }
 
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })

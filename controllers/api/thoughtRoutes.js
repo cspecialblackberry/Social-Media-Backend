@@ -8,7 +8,6 @@ router.get('/', async (req, res) => {
         const response = await Thought.find({})
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -19,7 +18,6 @@ router.get('/:id', async (req, res) => {
         const response = await Thought.findById(req.params.id).lean({ virtuals: true })
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -35,7 +33,6 @@ router.post('/', async (req, res) => {
         )
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -49,7 +46,6 @@ router.put('/:id', async (req, res) => {
         }, req.body)
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -62,14 +58,12 @@ router.delete('/:id', async (req, res) => {
         })
         res.send(response)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
 
 //post a reaction to a specific thought
 router.post('/:id/reactions', async (req, res) => {
-    console.log(req.body)
     try {
         const response = await Thought.findById(req.params.id).lean()
         if (response) {
@@ -83,7 +77,6 @@ router.post('/:id/reactions', async (req, res) => {
             res.send('invalid thought id')
         }
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
@@ -99,7 +92,6 @@ router.delete('/:id/reactions/:reactionId', async (req, res) => {
         }, response)
         res.send(update)
     } catch (err) {
-        console.error(err)
         res.status(400).json(err)
     }
 })
